@@ -13,15 +13,13 @@
 import { ref } from "vue";
 import Sidebar from "../../components/layouts/Sidebar.vue";
 const sidebar_items = ref([
-  { title: "Students", path: "/students" },
-  { title: "Teachers", path: "/teachers" },
-  { title: "Groups", path: "/groups" },
-  { title: "Users", path: "/users" },
+  { title: "Products", path: "/products" },
 ]);
 </script>
 
 <style lang="scss" scoped>
 .sidebar {
+    width: 100%;;
   display: flex;
 }
 .sidebar-left {
@@ -31,5 +29,8 @@ const sidebar_items = ref([
 
 .sidebar-right {
   width: calc(100% - 300px);
+    height: 100vh;
+  overflow: auto;
+
 }
 </style>

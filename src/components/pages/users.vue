@@ -1,7 +1,7 @@
 <template>
   <AppModal v-model="dialog">
-    <h1 v-if="!forms._id">Add Admin</h1>
-    <h1 v-else>Edit Admin</h1>
+    <h1 v-if="!forms._id">Add User</h1>
+    <h1 v-else>Edit User</h1>
     <form>
       <input
         type="text"
@@ -11,39 +11,28 @@
       />
       <input
         type="text"
-        v-model="forms.brand"
+        v-model="forms.surname"
         class="form-control my-2"
-        placeholder="Brand"
+        placeholder="Surname"
       />
+      <input
+        type="number"
+        v-model="forms.age"
+        class="form-control my-2"
+        placeholder="Age"
+      />
+      
+      <select v-model="forms.is_diploma" class="form-control my-2">
+        <option value="yes">yes</option>
+        <option value="no">no</option>
+      </select>
+
+
       <input
         type="text"
-        v-model="forms.group"
+        v-model="forms.address"
         class="form-control my-2"
-        placeholder="Group"
-      />
-      <input
-        type="number"
-        v-model="forms.price"
-        class="form-control my-2"
-        placeholder="Price"
-      />
-      <input
-        type="number"
-        v-model="forms.arrival_price"
-        class="form-control my-2"
-        placeholder="Arrival_price"
-      />
-      <input
-        type="number"
-        v-model="forms.selling_price"
-        class="form-control my-2"
-        placeholder="Selling_price"
-      />
-      <input
-        type="text"
-        v-model="forms.description"
-        class="form-control my-2"
-        placeholder="Description"
+        placeholder="Address"
       />
       <input
         type="password"
@@ -88,12 +77,10 @@ const toastedit = () => {
 
 const forms = ref({
   name: "",
-  brand: "",
-  group: "",
-  price:null,
-  arrival_price:null,
-  selling_price:null,
-  description:"",
+  surname: "",
+  age: null,
+  is_diploma: false,
+  address: "",
   password: "",
   confirm_password: "",
 });
@@ -114,15 +101,12 @@ const save = (e) => {
   try {
     if (!forms.value._id) {
       http
-        .post("/products/add", {
+        .post("/users/add", {
           name: forms.value.name,
-          brand: forms.value.brand,
-          group: forms.value.group,
-        
-          price: forms.value.price,
-          arrival_price: forms.value.arrival_price,
-          selling_price: forms.value.selling_price,
-          description: forms.value.description,
+          surname: forms.value.surname,
+          age: forms.value.age,
+          is_diploma: forms.value == 'yes' ? true : false,
+          address: forms.value.address,
           password: forms.value.password,
           confirm_password: forms.value.confirm_password,
         })
@@ -135,14 +119,12 @@ const save = (e) => {
         });
     } else {
       http
-        .patch(`/products/update/${forms.value._id}`, {
+        .patch(`/users/update/${forms.value._id}`, {
           name: forms.value.name,
-          brand: forms.value.brand,
-          group: forms.value.group,
-          price: forms.value.price,
-          arrival_price: forms.value.arrival_price,
-          selling_price: forms.value.selling_price,
-          description: forms.value.description,
+          surname: forms.value.surname,
+          age: forms.value.age,
+          is_diploma: forms.value == 'yes' ? true : false,
+          address: forms.value.address,
           password: forms.value.password,
         })
         .then((res) => {
@@ -156,6 +138,7 @@ const save = (e) => {
   } catch (err) {
     console.log(err);
   }
+  
 };
 defineExpose({ openModal });
 </script>

@@ -1,48 +1,41 @@
 <template>
   <div class="container">
-    <countries ref="countries_modal" />
+    <users ref="users_modal" />
     <div class="btn-first mb-3">
       <button @click="createItem" class="btn btn-danger">Create User</button>
       <button @click="logOut" class="btn btn-danger">LogOut</button>
     </div>
-    <div class="row">
-      <div
-        class="col-6 my-2"
-        v-for="(item, index) in items.products"
-        :key="index"
-      >
+
+<div class="row">
+      <div class="col-6 my-2" v-for="(item, index) in items.users" :key="index">
         <div class="card">
           <div class="card-header">
-            <h1 class="text-center fs-6">{{ item.email }}</h1>
+            <h7 class="text-center">User: {{ item._id }}</h7>
           </div>
           <div class="card-body">
-            <h1 class="fs-3">name:{{ item.name }}</h1>
-            <h1 class="fs-3">brand:{{ item.brand }}</h1>
-            <h1 class="fs-3">group:{{ item.group }}</h1>
-            <h1 class="fs-3">price:{{ item.price }}</h1>
-            <h1 class="fs-3">arrival_price:{{ item.arrival_price }}</h1>
-            <h1 class="fs-3">selling_price:{{ item.selling_price }}</h1>
-            <h1 class="fs-3">description:{{ item.description }}</h1>
+            <h3>Ismi: {{ item.name }}</h3>
+            <h3>Familiyasi: {{ item.surname }}</h3>
+            <h4>Yoshi: {{ item.age }}</h4>
+            <h4>Adress: {{ item.address }}</h4>
+            <h4>Diplomi: {{ item.is_diploma }}</h4>
             <p>{{ item.username }}</p>
           </div>
           <div class="card-footer">
-            <button class="btn btn-success" @click="editItem(item)">
-              Edit
-            </button>
-            <button class="btn btn-success" @click="deleteItem(item._id)">
+            <button class="btn btn-info" @click="editItem(item)">Edit</button>
+            <button class="btn btn-danger" @click="deleteItem(item._id)">
               Delete
             </button>
           </div>
         </div>
       </div>
     </div>
-  </div>
+        </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import http from "../../components/plugins/axios";
-import countries from "../../components/pages/task.vue";
+import users from "../../components/pages/users.vue";
 import { createToast } from "mosha-vue-toastify";
 
 const toastdelete = () => {
@@ -54,11 +47,11 @@ const toastdelete = () => {
 };
 
 const items = ref([]);
-const countries_modal = ref();
+const users_modal = ref();
 
-const getCountries = () => {
+const getUsers = () => {
   http
-    .get("products")
+    .get("users")
     .then((res) => {
       res.data = res.data;
       items.value = res.data;
@@ -69,41 +62,38 @@ const getCountries = () => {
     });
 };
 
-const deleteItem = (id) => {
+const deleteItem = (_id) => {
   http
-    .delete(`/products/${id}`)
+    .delete(`/users/${_id}`)
     .then((res) => {
-      localStorage.setItem(
-        "notification",
-        JSON.stringify({
-          message: "Product is deleted",
-          type: "danger",
-        })
-      );
-      location.reload();
+      console.log(res);
+      if (res.status === 200) {
+        toastdelete();
+        setTimeout(() => {
+          location.reload();
+        }, 3000);
+      }
     })
     .catch((err) => {
-      console.log("error", err);
+      console.log(err);
     });
 };
 
 const createItem = () => {
-  countries_modal.value.openModal();
+  users_modal.value.openModal();
 };
 
 const editItem = (item) => {
-  countries_modal.value.openModal(item);
+  users_modal.value.openModal(item);
 };
 
 const logOut = () => {
   localStorage.removeItem("token");
   location.reload();
 };
-getCountries();
-
+getUsers();
 </script>
 <style lang="scss" scoped>
-
 .button-group {
   display: flex;
   justify-content: space-evenly;
@@ -113,7 +103,6 @@ getCountries();
 .card {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
-  margin-bottom: 20px; /* Added a margin to separate cards */
 }
 
 .card:hover {
@@ -125,10 +114,6 @@ getCountries();
   color: white;
   padding: 10px;
   text-align: center;
-}
-
-.card-body {
-  padding: 10px; /* Added padding for better readability */
 }
 
 .card-footer {
@@ -143,11 +128,4 @@ getCountries();
 .btn-danger {
   width: 80px;
 }
-
-/* Additional styles for specific elements if needed */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
 </style>

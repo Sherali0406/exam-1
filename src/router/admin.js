@@ -6,36 +6,13 @@ export default {
   },
   children: [
     {
-      path: "/students",
-      name: "students",
+      path: "/products",
+      name: "products",
       component: () => {
-        return import("../views/admin/Students.vue");
+        return import("../views/admin/Countries.vue");
       },
     },
-    {
-      path: "/teachers",
-      name: "teachers",
-      component: () => {
-        return import("../views/admin/Teachers.vue");
-      },
-    },
-    {
-      path: "/groups",
-      name: "groups",
-      component: () => {
-        return import("../views/admin/Groups.vue");
-      },
-    },
-    {
-      path: "/users",
-      name: "users",
-      // component: () => {
-      //   return import("../views/admin/Users.vue");
-      // },
-      component: () => {
-        return import("../views/admin/Users2.vue");
-      },
-    },
+
     {
       path: "/tasks",
       name: "tasks",
@@ -43,5 +20,6 @@ export default {
         return import("../views/admin/Countries.vue");
       },
     },
+
   ],
 };

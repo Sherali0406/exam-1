@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const http = axios.create({
-  baseURL: "https://todonew-production.up.railway.app/api",
+  baseURL: "http://34.125.211.64:3300/api",
 });
 
 http.interceptors.request.use(

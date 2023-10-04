@@ -6,42 +6,18 @@ export default {
   },
   children: [
     {
-      path: "/notebooks",
-      name: "notebooks",
+      path: "/users",
+      name: "users",
       component: () => {
-        return import("../views/superadmin/Notebooks.vue");
-      },
-    },
-    {
-      path: "/laptops",
-      name: "laptops",
-      component: () => {
-        return import("../views/superadmin/Laptops.vue");
-      },
-    },
-    {
-      path: "/smartphones",
-      name: "smartphones",
-      component: () => {
-        return import("../views/superadmin/Smartphones.vue");
+        return import("../views/superadmin/Users.vue");
       },
     },
 
     {
-      path: "/products",
-      name: "products",
+      path: "/xexe",
+      name: "Xexe",
       component: () => {
-        return import("../views/superadmin/Products.vue");
-      },
-    },
-    {
-      path: "/single_product/:id",
-      name: "single_product",
-      meta: {
-        child: "product_lists",
-      },
-      component: () => {
-        return import("../views/superadmin/SingleProduct.vue");
+        return import("../views/superadmin/Users.vue");
       },
     },
   ],
